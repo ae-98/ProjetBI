@@ -1,0 +1,72 @@
+<Schema name="realPolice">
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="risque">
+    <Hierarchy name="typederisque" visible="true" hasAll="true" primaryKey="idrisques">
+      <Table name="drisque">
+      </Table>
+      <Level name="typederisque" visible="true" table="drisque" column="type_risque" nameColumn="type_risque" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="date">
+    <Hierarchy name="mois" visible="true" hasAll="true" primaryKey="iddate">
+      <Table name="ddate">
+      </Table>
+      <Level name="mois" visible="true" table="ddate" column="mois" nameColumn="mois" type="Integer" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="annee" visible="true" table="ddate" column="annee" nameColumn="annee" type="Integer" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="police">
+    <Hierarchy name="note" visible="true" hasAll="true" primaryKey="idnote">
+      <Table name="dpolice">
+      </Table>
+      <Level name="police" visible="true" table="dpolice" column="note" nameColumn="note" type="Integer" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="client">
+    <Hierarchy name="prenom" visible="true" hasAll="true" primaryKey="idclient">
+      <Table name="dclient">
+      </Table>
+      <Level name="prenom" visible="true" table="dclient" column="prenom" nameColumn="prenom" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="bienassure">
+    <Hierarchy name="nom" visible="true" hasAll="true" primaryKey="idbienAssure">
+      <Table name="dbienassure">
+      </Table>
+      <Level name="nom" visible="true" table="dbienassure" column="nomBienAssure" nameColumn="nomBienAssure" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="operateur">
+    <Hierarchy name="typeoperateur" visible="true" hasAll="true" primaryKey="idoperateur">
+      <Table name="doperateur">
+      </Table>
+      <Level name="typeoperation" visible="true" table="doperateur" column="typeOperateur" nameColumn="typeOperateur" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="Police" visible="true" cache="true" enabled="true">
+    <Table name="dfact">
+    </Table>
+    <DimensionUsage source="client" name="client" visible="true" foreignKey="client_idclient" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="police" name="police" visible="true" foreignKey="table1_idnote" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="operateur" name="operateur" visible="true" foreignKey="operateur_idoperateur" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="bienassure" name="bienassure" visible="true" foreignKey="bienAssure_idbienAssure" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="risque" name="risque" visible="true" foreignKey="risques_idrisques" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="date" name="date" visible="true" foreignKey="iddate" highCardinality="false">
+    </DimensionUsage>
+    <Measure name="montant" column="monant" datatype="Integer" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="nombrepaiement" column="nbrMontant" datatype="Integer" aggregator="count" visible="true">
+    </Measure>
+  </Cube>
+</Schema>
